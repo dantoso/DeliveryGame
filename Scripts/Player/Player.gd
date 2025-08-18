@@ -1,6 +1,13 @@
 extends CharacterBody2D
 class_name Player
 
+enum ControlType {
+	MOUSE,
+	KEYS
+}
+
+@export var controlType: ControlType = ControlType.MOUSE
+
 @onready var moveComponent: MoveComponent = $MoveComponent
 @onready var controller: PlayerController = $PlayerController
 

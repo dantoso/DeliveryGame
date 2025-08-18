@@ -12,6 +12,7 @@ script = ExtResource("1_gntrk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_qbkls")
+debug_color = Color(0, 0.642197, 0.321826, 0.42)
 
 [node name="PlayerController" type="Node" parent="." node_paths=PackedStringArray("moveComponent")]
 script = ExtResource("2_kyqiw")

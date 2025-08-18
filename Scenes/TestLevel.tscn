@@ -1,3 +1,17 @@
-[gd_scene format=3 uid="uid://dv6241tlheq26"]
+[gd_scene load_steps=3 format=3 uid="uid://dv6241tlheq26"]
+
+[ext_resource type="Texture2D" uid="uid://hb3vnkwloaom" path="res://Assets/Test/isometric_pattern_city.png" id="1_5ms4e"]
+[ext_resource type="PackedScene" uid="uid://dth74ffmlb1hs" path="res://Scenes/Player.tscn" id="1_bhm8u"]
 
 [node name="TestLevel" type="Node2D"]
+
+[node name="Parallax2D" type="Parallax2D" parent="."]
+repeat_size = Vector2(1158, 994)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D"]
+texture = ExtResource("1_5ms4e")
+centered = false
+
+[node name="Player" parent="." instance=ExtResource("1_bhm8u")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
