@@ -3,7 +3,7 @@ class_name Player
 
 enum ControlType {
 	MOUSE,
-	KEYS
+	KEYS_ONLY
 }
 
 @export var controlType: ControlType = ControlType.MOUSE

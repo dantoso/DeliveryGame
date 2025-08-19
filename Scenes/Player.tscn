@@ -8,6 +8,7 @@
 radius = 8.0
 
 [node name="Player" type="CharacterBody2D"]
+motion_mode = 1
 script = ExtResource("1_gntrk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -20,4 +21,9 @@ moveComponent = NodePath("../MoveComponent")
 
 [node name="MoveComponent" type="Node" parent="."]
 script = ExtResource("2_gntrk")
+maxSpeed = null
+acceleration = null
+deceleration = null
+brakeForce = null
+steerMultiplier = null
 metadata/_custom_type_script = "uid://ic8bfk3wqyhi"

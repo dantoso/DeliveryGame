@@ -49,4 +49,7 @@ func brake(delta: float) -> float:
 
 
 func inertia(delta: float) -> float:
-	return deceleration * delta
+	return deceleration * delta * (1.0 - accelPedal)
+
+
+func getCentrifugal() -> Vector2:
