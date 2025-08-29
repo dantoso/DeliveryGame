@@ -3,9 +3,9 @@ class_name MoveComponent
 
 @onready var character: CharacterBody2D = get_parent()
 
-@export var maxSpeed: = 300.0
-@export var acceleration: = 350.0
-@export var deceleration: = 100.0
+@export var maxSpeed: = 400.0
+@export var acceleration: = 300.0
+@export var deceleration: = 50.0
 @export var brakeForce: = 1000.0
 @export var steerMultiplier: = 3.0
 
@@ -22,19 +22,14 @@ var targetNormal: = Vector2(0, -1):
 var orientation: = Vector2(0, -1):
 	set(new):
 		orientation = new.normalized()
-var moveNormal: = Vector2.ZERO:
-	set(new):
-		moveNormal = new
-		if orientation.dot(new) < 0:
-			absVelocity = 0
-			didTurn.emit(new)
-		if new.length_squared() > 0:
-			orientation = new.normalized()
 
-
+# if turning too tight (target x orientaion dot product is too small)
+# then calculate momentum, keep bike moving along orientation while losing speed
+# while make it reaccelerate (from 0?) along target
 func updateMovement(delta: float) -> void:
 	absVelocity = move_toward(absVelocity, 0, brake(delta) + inertia(delta))
 	absVelocity = move_toward(absVelocity, maxSpeed, accelerate(delta))
+	var dot: = targetNormal.dot(orientation)
 	orientation = orientation.move_toward(targetNormal, delta * steerMultiplier)
 	
 	character.velocity = absVelocity * orientation
@@ -52,4 +47,4 @@ func inertia(delta: float) -> float:
 	return deceleration * delta * (1.0 - accelPedal)
 
 
-func getCentrifugal() -> Vector2:
+#func getCentrifugal() -> Vector2:
