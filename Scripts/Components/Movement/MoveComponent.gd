@@ -27,6 +27,8 @@ var orientation: = Vector2(0, -1):
 # if turning too tight (target x orientaion dot product is too small)
 # then calculate momentum, keep bike moving along orientation while losing speed
 # while make it reaccelerate (from 0?) along target
+
+# make it so the slower the bike, the easier to turn quickly
 func updateMovement(delta: float) -> void:
 	absVelocity = move_toward(absVelocity, 0, brake(delta) + inertia(delta))
 	absVelocity = move_toward(absVelocity, maxSpeed, accelerate(delta))
