@@ -10,6 +10,7 @@ var direction: = Vector2(0, -1):
 		mod.x = Vector2(-direction.y, direction.x)
 		transform = mod
 
+
 func _ready() -> void:
 	animation_changed.connect(
 		func():
