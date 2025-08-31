@@ -10,6 +10,14 @@ enum ControlType {
 
 @onready var moveComponent: MoveComponent = $MoveComponent
 @onready var controller: PlayerController = $PlayerController
+@onready var sprite: SpriteComponent = $SpriteComponent
+
+func _ready():
+	moveComponent.didTurn.connect(
+		func(new: Vector2):
+			print(new)
+			sprite.direction = new
+	)
 
 func _physics_process(delta: float) -> void:
 	moveComponent.updateMovement(delta)

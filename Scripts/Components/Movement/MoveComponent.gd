@@ -22,6 +22,7 @@ var targetNormal: = Vector2(0, -1):
 var orientation: = Vector2(0, -1):
 	set(new):
 		orientation = new.normalized()
+		didTurn.emit(orientation)
 
 # if turning too tight (target x orientaion dot product is too small)
 # then calculate momentum, keep bike moving along orientation while losing speed

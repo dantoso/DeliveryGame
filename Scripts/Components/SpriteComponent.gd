@@ -2,11 +2,13 @@ extends AnimatedSprite2D
 class_name SpriteComponent
 
 var locked: = false
-var direction: = Vector2(1, 0):
+var direction: = Vector2(0, -1):
 	set(new):
 		direction = new
-		updateAnimationFace(new)
-
+		var mod: = Transform2D.IDENTITY
+		mod.y = -direction
+		mod.x = Vector2(-direction.y, direction.x)
+		transform = mod
 
 func _ready() -> void:
 	animation_changed.connect(

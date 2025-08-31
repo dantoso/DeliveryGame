@@ -1,11 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://dth74ffmlb1hs"]
+[gd_scene load_steps=8 format=3 uid="uid://dth74ffmlb1hs"]
 
 [ext_resource type="Script" uid="uid://cdmblxc6f4byj" path="res://Scripts/Player/Player.gd" id="1_gntrk"]
 [ext_resource type="Script" uid="uid://ic8bfk3wqyhi" path="res://Scripts/Components/Movement/MoveComponent.gd" id="2_gntrk"]
 [ext_resource type="Script" uid="uid://4ip0ad544kyq" path="res://Scripts/Player/PlayerController.gd" id="2_kyqiw"]
+[ext_resource type="Texture2D" uid="uid://c53ij4a0unnms" path="res://Assets/Test/arrow.png" id="4_dewec"]
+[ext_resource type="Script" uid="uid://dinmt5udp4ecn" path="res://Scripts/Components/SpriteComponent.gd" id="5_5ixxa"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qbkls"]
 radius = 8.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nn08x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_dewec")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Player" type="CharacterBody2D"]
 motion_mode = 1
@@ -22,3 +35,8 @@ moveComponent = NodePath("../MoveComponent")
 [node name="MoveComponent" type="Node" parent="."]
 script = ExtResource("2_gntrk")
 metadata/_custom_type_script = "uid://ic8bfk3wqyhi"
+
+[node name="SpriteComponent" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_nn08x")
+script = ExtResource("5_5ixxa")
+metadata/_custom_type_script = "uid://dinmt5udp4ecn"
