@@ -15,7 +15,6 @@ enum ControlType {
 func _ready():
 	moveComponent.didTurn.connect(
 		func(new: Vector2):
-			print(new)
 			sprite.direction = new
 	)
 

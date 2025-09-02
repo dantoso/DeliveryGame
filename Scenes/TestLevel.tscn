@@ -1,9 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://dv6241tlheq26"]
+[gd_scene load_steps=5 format=3 uid="uid://dv6241tlheq26"]
 
 [ext_resource type="Texture2D" uid="uid://hb3vnkwloaom" path="res://Assets/Test/isometric_pattern_city.png" id="1_5ms4e"]
 [ext_resource type="PackedScene" uid="uid://dth74ffmlb1hs" path="res://Scenes/Player.tscn" id="1_bhm8u"]
+[ext_resource type="Script" uid="uid://fakp7lfvc7yr" path="res://Scripts/Level/TestLevel.gd" id="1_shgkq"]
+[ext_resource type="Script" uid="uid://dxjgha7w4bjrt" path="res://Scripts/Components/FPSCounter.gd" id="4_ujyaq"]
 
-[node name="TestLevel" type="Node2D"]
+[node name="TestLevel" type="Node2D" node_paths=PackedStringArray("speedCounter")]
+script = ExtResource("1_shgkq")
+speedCounter = NodePath("CanvasLayer/PanelContainer/VBoxContainer/SpeedCounter")
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
 repeat_size = Vector2(1158, 994)
@@ -15,3 +19,26 @@ centered = false
 [node name="Player" parent="." instance=ExtResource("1_bhm8u")]
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(1.5, 1.5)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/PanelContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer"]
+layout_mode = 2
+
+[node name="FPSCounter" type="Label" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "TESTETESTETESTE"
+script = ExtResource("4_ujyaq")
+
+[node name="SpeedCounter" type="Label" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "TESTETESTETESTE"
