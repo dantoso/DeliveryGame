@@ -4,14 +4,16 @@ class_name MoveComponent
 @onready var character: CharacterBody2D = get_parent()
 
 @export var maxSpeed: = 400.0
-@export var acceleration: = 300.0
-@export var deceleration: = 50.0
+@export var maxSteering: = 0.25 * PI
+@export var steeringMod: = 0.1
+@export var engineForce: = 300.0
+@export var inertiaValue: = 300.0
 @export var brakeForce: = 1000.0
-@export var steerMultiplier: = 3.0
 
 signal didTurn(new: Vector2)
 
 var absVelocity: = 0.0
+var steerDirection: = Vector2(0, -1)
 var accelPedal: = 0.0
 var brakePedal: = 0.0
 
@@ -32,14 +34,16 @@ var orientation: = Vector2(0, -1):
 func updateMovement(delta: float) -> void:
 	absVelocity = move_toward(absVelocity, 0, brake(delta) + inertia(delta))
 	absVelocity = move_toward(absVelocity, maxSpeed, accelerate(delta))
-	var dot: = targetNormal.dot(orientation)
-	orientation = orientation.move_toward(targetNormal, delta * steerMultiplier)
 	
-	character.velocity = absVelocity * orientation
+	var targetAngle: = orientation.angle_to(targetNormal)
+	var steeringAngle: = minf(absf(targetAngle), maxSteering) * signf(targetAngle)
+	steerDirection = orientation.rotated(steeringAngle)
+	orientation = orientation.rotated(steeringAngle*steeringMod*accelPedal)
+	character.velocity = absVelocity * steerDirection
 
 
 func accelerate(delta: float) -> float:
-	return acceleration * delta * accelPedal
+	return engineForce * delta * accelPedal
 
 
 func brake(delta: float) -> float:
@@ -47,7 +51,7 @@ func brake(delta: float) -> float:
 
 
 func inertia(delta: float) -> float:
-	return deceleration * delta * (1.0 - accelPedal)
+	return inertiaValue * delta * (1.0 - accelPedal)
 
 
 #func getCentrifugal() -> Vector2:
