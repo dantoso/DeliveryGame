@@ -5,7 +5,7 @@ class_name MoveComponent
 
 @export var maxSpeed: = 400.0
 @export var maxSteering: = 0.25 * PI
-@export var steeringMod: = 0.1
+@export var steeringMod: = 0.03
 @export var engineForce: = 300.0
 @export var inertiaValue: = 300.0
 @export var brakeForce: = 1000.0
@@ -38,7 +38,9 @@ func updateMovement(delta: float) -> void:
 	var targetAngle: = orientation.angle_to(targetNormal)
 	var steeringAngle: = minf(absf(targetAngle), maxSteering) * signf(targetAngle)
 	steerDirection = orientation.rotated(steeringAngle)
-	orientation = orientation.rotated(steeringAngle*steeringMod*accelPedal)
+	
+	orientation = orientation.rotated(steeringAngle*steeringMod*absVelocity*delta)
+	
 	character.velocity = absVelocity * steerDirection
 
 
