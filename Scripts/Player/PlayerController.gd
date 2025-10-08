@@ -5,9 +5,16 @@ class_name PlayerController
 
 @onready var player: Player = get_parent()
 
+var steerFunc: Callable
+
+func _ready():
+	if player.controlType == player.ControlType.MOUSE:
+		steerFunc = Callable(self, "mouseSteer")
+	if player.controlType == player.ControlType.KEYS_ONLY:
+		steerFunc = Callable(self, "keySteer")
+
 func _physics_process(delta: float) -> void:
-	var steering: = Input.get_vector("SteerLeft", "SteerRight", "SteerUp", "SteerDown")
-	moveComponent.targetNormal = steering
+	steerFunc.call()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -30,3 +37,13 @@ func getMouseVector() -> Vector2:
 	var mousePos: = player.get_global_mouse_position()
 	
 	return (mousePos - globalPos).normalized()
+
+
+func mouseSteer() -> void:
+	var steering: = Input.get_vector("SteerLeft", "SteerRight", "SteerUp", "SteerDown")
+	moveComponent.targetNormal = steering
+
+
+func keySteer() -> void:
+	var steering: = Input.get_axis("SteerLeft", "SteerRight")
+	moveComponent.targetNormal = moveComponent.orientation.rotated(steering * moveComponent.maxSteering)

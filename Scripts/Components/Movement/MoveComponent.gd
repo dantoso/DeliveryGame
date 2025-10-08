@@ -4,10 +4,10 @@ class_name MoveComponent
 @onready var character: CharacterBody2D = get_parent()
 
 @export var maxSpeed: = 400.0
-@export var maxSteering: = 0.25 * PI
-@export var steeringMod: = 0.03
+@export var maxSteering: = 0.3 * PI
+@export var steeringMod: = 1.0
 @export var engineForce: = 300.0
-@export var inertiaValue: = 300.0
+@export var inertiaValue: = 150.0
 @export var brakeForce: = 1000.0
 
 signal didTurn(new: Vector2)
@@ -39,9 +39,9 @@ func updateMovement(delta: float) -> void:
 	var steeringAngle: = minf(absf(targetAngle), maxSteering) * signf(targetAngle)
 	steerDirection = orientation.rotated(steeringAngle)
 	
-	orientation = orientation.rotated(steeringAngle*steeringMod*absVelocity*delta)
+	orientation = orientation.rotated(steeringAngle*delta*steeringMod*absVelocity*delta)
 	
-	character.velocity = absVelocity * steerDirection
+	character.velocity = absVelocity * orientation
 
 
 func accelerate(delta: float) -> float:
