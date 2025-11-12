@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=3 uid="uid://bp7g542ejf2mq"]
+
+[ext_resource type="PackedScene" uid="uid://dth74ffmlb1hs" path="res://Scenes/Player.tscn" id="1_qotlx"]
+[ext_resource type="Script" uid="uid://7jdqtoslgvau" path="res://Scripts/Level/Sandbox.gd" id="1_xqu6k"]
+[ext_resource type="Script" uid="uid://dxjgha7w4bjrt" path="res://Scripts/Components/FPSCounter.gd" id="2_eo7g3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0a0mn"]
+size = Vector3(500, 1, 500)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0a0mn"]
+albedo_color = Color(0.046278, 0.046278, 0.046278, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0a0mn"]
+material = SubResource("StandardMaterial3D_0a0mn")
+size = Vector3(500, 1, 500)
+
+[node name="Sandbox" type="Node3D" node_paths=PackedStringArray("speedCounter", "rotationLabel")]
+script = ExtResource("1_xqu6k")
+speedCounter = NodePath("HUD/PanelContainer/VBoxContainer/SpeedCounter")
+rotationLabel = NodePath("HUD/PanelContainer/VBoxContainer/Rotation")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+collision_layer = 2
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_0a0mn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_0a0mn")
+
+[node name="Player" parent="." instance=ExtResource("1_qotlx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.34202, 0.939693, 0, -0.939693, 0.34202, 0, 100, 0)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="HUD"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="HUD/PanelContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/PanelContainer"]
+layout_mode = 2
+
+[node name="FPSCounter" type="Label" parent="HUD/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Contador de FPS"
+script = ExtResource("2_eo7g3")
+
+[node name="SpeedCounter" type="Label" parent="HUD/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Velocimetro"
+
+[node name="Rotation" type="Label" parent="HUD/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Giroscopio"

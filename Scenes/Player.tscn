@@ -1,33 +1,35 @@
-[gd_scene load_steps=8 format=3 uid="uid://dth74ffmlb1hs"]
+[gd_scene load_steps=11 format=3 uid="uid://dth74ffmlb1hs"]
 
 [ext_resource type="Script" uid="uid://cdmblxc6f4byj" path="res://Scripts/Player/Player.gd" id="1_gntrk"]
 [ext_resource type="Script" uid="uid://ic8bfk3wqyhi" path="res://Scripts/Components/Movement/MoveComponent.gd" id="2_gntrk"]
 [ext_resource type="Script" uid="uid://4ip0ad544kyq" path="res://Scripts/Player/PlayerController.gd" id="2_kyqiw"]
-[ext_resource type="Texture2D" uid="uid://c53ij4a0unnms" path="res://Assets/Test/arrow.png" id="4_dewec"]
-[ext_resource type="Script" uid="uid://dinmt5udp4ecn" path="res://Scripts/Components/SpriteComponent.gd" id="5_5ixxa"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qbkls"]
-radius = 8.0
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5ixxa"]
+radius = 0.25
+height = 1.0
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_nn08x"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("4_dewec")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_gntrk"]
+radius = 0.25
+height = 1.0
 
-[node name="Player" type="CharacterBody2D"]
-collision_mask = 3
-motion_mode = 1
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gntrk"]
+albedo_color = Color(1, 0.176471, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_dewec"]
+material = SubResource("StandardMaterial3D_gntrk")
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gntrk"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_gntrk"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_gntrk"]
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera")]
+collision_mask = 2
 script = ExtResource("1_gntrk")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_qbkls")
-debug_color = Color(0, 0.642197, 0.321826, 0.42)
+camera = NodePath("CameraPivot/SpringArm3D/Camera3D")
 
 [node name="PlayerController" type="Node" parent="." node_paths=PackedStringArray("moveComponent")]
 script = ExtResource("2_kyqiw")
@@ -37,7 +39,37 @@ moveComponent = NodePath("../MoveComponent")
 script = ExtResource("2_gntrk")
 metadata/_custom_type_script = "uid://ic8bfk3wqyhi"
 
-[node name="SpriteComponent" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_nn08x")
-script = ExtResource("5_5ixxa")
-metadata/_custom_type_script = "uid://dinmt5udp4ecn"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_5ixxa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("CapsuleMesh_gntrk")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.507949, -2.22032e-08)
+mesh = SubResource("SphereMesh_dewec")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+billboard = 1
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_gntrk")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot"]
+collision_mask = 2
+shape = SubResource("SphereShape3D_gntrk")
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+current = true
+
+[node name="MouseRaycastPlane" type="StaticBody3D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MouseRaycastPlane"]
+shape = SubResource("WorldBoundaryShape3D_gntrk")

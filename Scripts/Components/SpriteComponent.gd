@@ -1,11 +1,11 @@
-extends AnimatedSprite2D
-class_name SpriteComponent
+extends AnimatedSprite3D
+class_name SpriteComponent3D
 
 var locked: = false
-var direction: = Vector2(0, -1):
+var direction: = Vector3(0, 0, 1):
 	set(new):
 		direction = new
-		var mod: = Transform2D.IDENTITY
+		var mod: = Transform3D.IDENTITY
 		mod.y = -direction
 		mod.x = Vector2(-direction.y, direction.x)
 		transform = mod

@@ -1,27 +1,28 @@
 extends Node
 class_name MoveComponent
 
-@onready var character: CharacterBody2D = get_parent()
+@onready var player: Player = get_parent()
 
-@export var maxSpeed: = 400.0
+@export var maxSpeed: = 50.0
 @export var maxSteering: = 0.3 * PI
-@export var steeringMod: = 1.0
-@export var engineForce: = 300.0
-@export var inertiaValue: = 150.0
-@export var brakeForce: = 1000.0
+@export var steeringMod: = 2.0
+@export var engineForce: = 25.0
+@export var inertiaValue: = 12.5
+@export var brakeForce: = 100.0
 
 signal didTurn(new: Vector2)
+signal didSteer(to: float)
 
 var absVelocity: = 0.0
-var steerDirection: = Vector2(0, -1)
+var steeringAngle: = 0.0
 var accelPedal: = 0.0
 var brakePedal: = 0.0
 
-var targetNormal: = Vector2(0, -1):
+var targetNormal: = Vector2(0, 1):
 	set(new):
 		if new.length_squared() > 0:
 			targetNormal = new
-var orientation: = Vector2(0, -1):
+var orientation: = Vector2(0, 1):
 	set(new):
 		orientation = new.normalized()
 		didTurn.emit(orientation)
@@ -32,16 +33,18 @@ var orientation: = Vector2(0, -1):
 
 # make it so the slower the bike, the easier to turn quickly
 func updateMovement(delta: float) -> void:
+	print(targetNormal)
 	absVelocity = move_toward(absVelocity, 0, brake(delta) + inertia(delta))
 	absVelocity = move_toward(absVelocity, maxSpeed, accelerate(delta))
 	
 	var targetAngle: = orientation.angle_to(targetNormal)
-	var steeringAngle: = minf(absf(targetAngle), maxSteering) * signf(targetAngle)
-	steerDirection = orientation.rotated(steeringAngle)
+	steeringAngle = minf(absf(targetAngle), maxSteering) * signf(targetAngle)
 	
-	orientation = orientation.rotated(steeringAngle*delta*steeringMod*absVelocity*delta)
+	var frameSteering: = steeringAngle*delta*steeringMod*absVelocity*delta
+	orientation = orientation.rotated(frameSteering)
+	didSteer.emit(frameSteering)
 	
-	character.velocity = absVelocity * orientation
+	player.velocity = absVelocity * Vector3(orientation.x, 0, orientation.y)
 
 
 func accelerate(delta: float) -> float:
