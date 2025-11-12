@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://bp7g542ejf2mq"]
+[gd_scene load_steps=7 format=3 uid="uid://dcdigkp83t8a3"]
 
 [ext_resource type="PackedScene" uid="uid://dth74ffmlb1hs" path="res://Scenes/Player.tscn" id="1_qotlx"]
-[ext_resource type="Script" uid="uid://7jdqtoslgvau" path="res://Scripts/Level/Sandbox.gd" id="1_xqu6k"]
+[ext_resource type="Script" path="res://Scripts/Level/Sandbox.gd" id="1_xqu6k"]
 [ext_resource type="Script" uid="uid://dxjgha7w4bjrt" path="res://Scripts/Components/FPSCounter.gd" id="2_eo7g3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0a0mn"]

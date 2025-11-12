@@ -42,7 +42,7 @@ func updateMovement(delta: float) -> void:
 	
 	var frameSteering: = steeringAngle*delta*steeringMod*absVelocity*delta
 	orientation = orientation.rotated(frameSteering)
-	didSteer.emit(frameSteering)
+	didSteer.emit(-frameSteering)
 	
 	player.velocity = absVelocity * Vector3(orientation.x, 0, orientation.y)
 
