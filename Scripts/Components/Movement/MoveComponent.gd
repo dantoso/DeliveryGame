@@ -33,7 +33,6 @@ var orientation: = Vector2(0, 1):
 
 # make it so the slower the bike, the easier to turn quickly
 func updateMovement(delta: float) -> void:
-	print(targetNormal)
 	absVelocity = move_toward(absVelocity, 0, brake(delta) + inertia(delta))
 	absVelocity = move_toward(absVelocity, maxSpeed, accelerate(delta))
 	

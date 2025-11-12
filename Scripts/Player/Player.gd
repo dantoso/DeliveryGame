@@ -38,6 +38,6 @@ func mouseRaycast() -> void:
 	var result: = space.intersect_ray(query)
 	
 	if result:
-		#print(result)
+		print(result)
 		var direction: Vector3 = (result.position - global_position).normalized()
 		moveComponent.targetNormal = Vector2(direction.x, direction.z)
