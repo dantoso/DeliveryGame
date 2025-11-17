@@ -12,15 +12,16 @@ enum ControlType {
 @onready var moveComponent: MoveComponent = $MoveComponent
 @onready var controller: PlayerController = $PlayerController
 @onready var shape: CollisionShape3D = $CollisionShape3D
+@onready var stateMachine: StateMachine = $StateMachine
 
 func _ready() -> void:
 	moveComponent.didSteer.connect(turnSprite)
+	stateMachine.start()
 
 
 func _physics_process(delta: float) -> void:
 	if controlType == ControlType.MOUSE:
 		mouseRaycast()
-	moveComponent.updateMovement(delta)
 	move_and_slide()
 
 
@@ -38,6 +39,5 @@ func mouseRaycast() -> void:
 	var result: = space.intersect_ray(query)
 	
 	if result:
-		print(result)
 		var direction: Vector3 = (result.position - global_position).normalized()
 		moveComponent.targetNormal = Vector2(direction.x, direction.z)

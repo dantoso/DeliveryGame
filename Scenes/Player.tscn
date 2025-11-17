@@ -1,8 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://dth74ffmlb1hs"]
+[gd_scene load_steps=14 format=3 uid="uid://dth74ffmlb1hs"]
 
 [ext_resource type="Script" uid="uid://cdmblxc6f4byj" path="res://Scripts/Player/Player.gd" id="1_gntrk"]
+[ext_resource type="Script" uid="uid://yuqyb6ogxiu6" path="res://Scripts/Components/StateMachine/StateMachine.gd" id="2_dewec"]
 [ext_resource type="Script" uid="uid://ic8bfk3wqyhi" path="res://Scripts/Components/Movement/MoveComponent.gd" id="2_gntrk"]
 [ext_resource type="Script" uid="uid://4ip0ad544kyq" path="res://Scripts/Player/PlayerController.gd" id="2_kyqiw"]
+[ext_resource type="Script" uid="uid://xb2hjecdjbeh" path="res://Scripts/Player/States/PlayerIdleState.gd" id="3_5ixxa"]
+[ext_resource type="Script" uid="uid://byxcg3g24ivko" path="res://Scripts/Player/States/PlayerMoveState.gd" id="4_nn08x"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5ixxa"]
 radius = 0.25
@@ -31,6 +34,21 @@ collision_mask = 10
 script = ExtResource("1_gntrk")
 camera = NodePath("CameraPivot/SpringArm3D/Camera3D")
 
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("defaultState")]
+script = ExtResource("2_dewec")
+defaultState = NodePath("IdleState")
+metadata/_custom_type_script = "uid://yuqyb6ogxiu6"
+
+[node name="IdleState" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "moveComponent")]
+script = ExtResource("3_5ixxa")
+player = NodePath("../..")
+moveComponent = NodePath("../../MoveComponent")
+
+[node name="MoveState" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "moveComponent")]
+script = ExtResource("4_nn08x")
+player = NodePath("../..")
+moveComponent = NodePath("../../MoveComponent")
+
 [node name="PlayerController" type="Node" parent="." node_paths=PackedStringArray("moveComponent")]
 script = ExtResource("2_kyqiw")
 moveComponent = NodePath("../MoveComponent")
@@ -57,7 +75,7 @@ texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_gntrk")
 
 [node name="CameraPivot" type="Node3D" parent="."]
-transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, 0, 0, 0)
+transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, 0, 0.31894, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot"]
 collision_mask = 2

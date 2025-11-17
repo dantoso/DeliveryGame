@@ -29,7 +29,7 @@ speedCounter = NodePath("HUD/PanelContainer/VBoxContainer/SpeedCounter")
 rotationLabel = NodePath("HUD/PanelContainer/VBoxContainer/Rotation")
 
 [node name="Floor" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 collision_layer = 2
 collision_mask = 3
 
@@ -53,7 +53,7 @@ mesh = SubResource("BoxMesh_j25i0")
 shape = SubResource("BoxShape3D_j25i0")
 
 [node name="Player" parent="." instance=ExtResource("1_qotlx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.35917, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.965926, 0.24321, -0.0885213, 0, 0.34202, 0.939693, 0.258819, -0.907673, 0.330366, 0, 14.4205, 0)

@@ -3,6 +3,7 @@ class_name MoveComponent
 
 @onready var player: Player = get_parent()
 
+@export_group("Engine")
 @export var maxSpeed: = 30.0
 @export var maxSteering: = 0.35 * PI
 @export var steeringMod: = 5.0
@@ -10,8 +11,12 @@ class_name MoveComponent
 @export var inertiaValue: = 12.5
 @export var brakeForce: = 100.0
 
+@export_group("Gravity")
+@export var gravity: = 20.0
+@export var terminalVelocity: = 100.0
+
 signal didTurn(new: Vector2)
-signal didSteer(to: float)
+signal didSteer(angle: float)
 
 var absVelocity: = 0.0
 var steeringAngle: = 0.0
@@ -44,6 +49,10 @@ func updateMovement(delta: float) -> void:
 	didSteer.emit(-frameSteering)
 	
 	player.velocity = absVelocity * Vector3(orientation.x, 0, orientation.y)
+
+
+func fall(delta: float) -> void:
+	player.velocity.y = maxf(player.velocity.y - gravity * delta, -terminalVelocity)
 
 
 func accelerate(delta: float) -> float:

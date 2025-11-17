@@ -13,6 +13,7 @@ func _ready():
 	if player.controlType == player.ControlType.KEYS_ONLY:
 		steerFunc = Callable(self, "keySteer")
 
+
 func _physics_process(delta: float) -> void:
 	steerFunc.call()
 
