@@ -1,14 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://dcdigkp83t8a3"]
+[gd_scene load_steps=8 format=3 uid="uid://dcdigkp83t8a3"]
 
 [ext_resource type="PackedScene" uid="uid://dth74ffmlb1hs" path="res://Scenes/Player.tscn" id="1_qotlx"]
 [ext_resource type="Script" uid="uid://7jdqtoslgvau" path="res://Scripts/Level/Sandbox.gd" id="1_xqu6k"]
 [ext_resource type="Script" uid="uid://dxjgha7w4bjrt" path="res://Scripts/Components/FPSCounter.gd" id="2_eo7g3"]
+[ext_resource type="Texture2D" uid="uid://c25somxo4a7mv" path="res://Assets/Test/Dirt_05-128x128.png" id="2_j25i0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0a0mn"]
 size = Vector3(500, 1, 500)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0a0mn"]
-albedo_color = Color(0.046278, 0.046278, 0.046278, 1)
+albedo_color = Color(0.412152, 0.412152, 0.412152, 1)
+albedo_texture = ExtResource("2_j25i0")
+uv1_scale = Vector3(20, 20, 20)
 
 [sub_resource type="BoxMesh" id="BoxMesh_0a0mn"]
 material = SubResource("StandardMaterial3D_0a0mn")
