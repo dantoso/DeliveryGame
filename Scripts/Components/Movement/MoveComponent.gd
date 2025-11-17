@@ -3,9 +3,9 @@ class_name MoveComponent
 
 @onready var player: Player = get_parent()
 
-@export var maxSpeed: = 50.0
-@export var maxSteering: = 0.3 * PI
-@export var steeringMod: = 2.0
+@export var maxSpeed: = 30.0
+@export var maxSteering: = 0.35 * PI
+@export var steeringMod: = 5.0
 @export var engineForce: = 25.0
 @export var inertiaValue: = 12.5
 @export var brakeForce: = 100.0

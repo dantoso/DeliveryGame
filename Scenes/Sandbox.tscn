@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dcdigkp83t8a3"]
+[gd_scene load_steps=10 format=3 uid="uid://dcdigkp83t8a3"]
 
 [ext_resource type="PackedScene" uid="uid://dth74ffmlb1hs" path="res://Scenes/Player.tscn" id="1_qotlx"]
 [ext_resource type="Script" uid="uid://7jdqtoslgvau" path="res://Scripts/Level/Sandbox.gd" id="1_xqu6k"]
@@ -17,6 +17,12 @@ uv1_scale = Vector3(20, 20, 20)
 material = SubResource("StandardMaterial3D_0a0mn")
 size = Vector3(500, 1, 500)
 
+[sub_resource type="BoxMesh" id="BoxMesh_j25i0"]
+size = Vector3(5, 10, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j25i0"]
+size = Vector3(5, 10, 10)
+
 [node name="Sandbox" type="Node3D" node_paths=PackedStringArray("speedCounter", "rotationLabel")]
 script = ExtResource("1_xqu6k")
 speedCounter = NodePath("HUD/PanelContainer/VBoxContainer/SpeedCounter")
@@ -33,11 +39,24 @@ shape = SubResource("BoxShape3D_0a0mn")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
 mesh = SubResource("BoxMesh_0a0mn")
 
+[node name="Props" type="Node3D" parent="."]
+
+[node name="Block" type="StaticBody3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.9862, 5, -12.8404)
+collision_layer = 8
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Props/Block"]
+mesh = SubResource("BoxMesh_j25i0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/Block"]
+shape = SubResource("BoxShape3D_j25i0")
+
 [node name="Player" parent="." instance=ExtResource("1_qotlx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.34202, 0.939693, 0, -0.939693, 0.34202, 0, 100, 0)
+transform = Transform3D(0.965926, 0.24321, -0.0885213, 0, 0.34202, 0.939693, 0.258819, -0.907673, 0.330366, 0, 14.4205, 0)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
