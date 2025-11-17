@@ -11,8 +11,14 @@ config_version=5
 [application]
 
 config/name="DeliveryGame"
+run/main_scene="uid://dcdigkp83t8a3"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1728
+window/size/viewport_height=972
 
 [input]
 
