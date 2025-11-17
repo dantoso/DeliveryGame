@@ -34,7 +34,7 @@ func mouseRaycast() -> void:
 	var from: = camera.project_ray_origin(mousePos)
 	var to: = from + camera.project_ray_normal(mousePos) * 100
 	var query: = PhysicsRayQueryParameters3D.create(from, to)
-	
+	query.collision_mask = 4
 	var result: = space.intersect_ray(query)
 	
 	if result:
